@@ -1,27 +1,32 @@
-const prompt = require('prompt-sync')();
-const fs = require('fs');
-const pdf = require('pdf-parse');
+import promptSync from 'prompt-sync';
+import fs from 'fs';
+import {PdfReader} from 'pdfreader';
 
-
-
-var filePath = prompt("What is the path to your pdf file?");
+const prompt = new promptSync();
+var filePath = prompt("Enter the path to your pdf file: ");
 console.log("You entered: " + filePath);
-var check = prompt("Is this correct?");
+var check = prompt("Is this correct? ");
 if(check){
     console.log("WOOOHOOO");
     let rawData = fs.readFileSync(filePath);
-    pdf(rawData).then(function(data){
-        //num pages
-        console.log(data.numpages);
-        //num rendered pages
-        console.log(data.numrender);
-        //PDF info
-        console.log(data.info);
-        //PDF metadata
-        console.log(data.metadata);
-        //PDF.js version
-        console.log(data.version);
-        //PDF text
-        console.log(data.text);
+    var l = await readPDFPages(rawData);
+    console.log(l);
+
+}
+
+function readPDFPages (buffer) {
+    const reader = new PdfReader();
+    return new Promise((resolve,reject) =>{
+        let pages = [];
+        reader.parseBuffer(buffer,(err,item) =>{
+            if(err) reject(err)
+            else if(!item) resolve(pages);
+            else if(item.page) pages.push({});
+            else if (item.text){
+                const row = pages[pages.length-1][item.y] || [];
+                row.push(item.text);
+                pages[pages.length-1][item.y] = row;
+            }
+        });
     });
 }
