@@ -1,0 +1,27 @@
+{
+  "name": "ccsp",
+  "version": "1.0.0",
+  "description": "Credit Card Statement Parser ",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Preetham-Mukkara/CCSP.git"
+  },
+  "author": "Preetham Mukkara",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Preetham-Mukkara/CCSP/issues"
+  },
+  "homepage": "https://github.com/Preetham-Mukkara/CCSP#readme",
+  "dependencies": {
+    "@google-cloud/local-auth": "^2.1.0",
+    "express": "^4.18.2",
+    "googleapis": "^105.0.0",
+    "pdf-parse": "^1.1.1",
+    "prompt-sync": "^4.2.0"
+  }
+}

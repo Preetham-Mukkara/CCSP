@@ -11,21 +11,20 @@ let options = {
     version: 'v1.9.426'
 }
 
-getFilename();
-function getFilename(){
+async function getInfo(){
     var filePath = prompt("Enter the path to your pdf file: ").trim();
     console.log("You entered: " + filePath);
-    let check = prompt("Is this correct? ");
-    if(check){
+    //let check = prompt("Is this correct? ");
+    if(1){
         console.log("WOOOHOOO");
         let dataBuffer = fs.readFileSync(filePath);
-        pdf(dataBuffer,options).then(function(data){
-            //console.log(data)
-            parseData(data.text)
+        await pdf(dataBuffer,options).then(function(data){
+             parseData(data.text)
         }).catch(function(error){
             console.log(error);
         });
     }
+    return [dates,locations,costs]
 }
 
 function findIndex(str){
@@ -53,9 +52,6 @@ function parseData(data){
         locations.push(transactions[i].slice(5,index+1).trim())
         costs.push(transactions[i].slice(index+1).trim())
     }
-    console.log(dates)
-    console.log(locations)
-    console.log(costs)
 }
 
 
@@ -82,3 +78,4 @@ function render_page(pageData){
     });
 }
 
+module.exports = getInfo

@@ -1,0 +1,14 @@
+node_modules/
+
+# Ignore Gradle build output directory
+build
+
+#Ignore vscode settings
+.vscode
+
+#Ignore >DS_Store
+**/.DS_Store
+
+#Ignore credentials
+credentials.json
+token.json
