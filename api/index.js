@@ -6,7 +6,7 @@ const {google} = require('googleapis');
 const info = require('./ccsp')
 
 // If modifying these scopes, delete token.json.
-const SCOPES = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive','https://www.googleapis.com/auth/drive.file'];
+const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
@@ -93,17 +93,17 @@ async function listTransactions(auth) {
 /**
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
-async function addTransactions(auth) {
-    const t = await info()
-    const sheets = google.sheets({version: 'v4', auth: auth});
+async function addTransactions(file,auth) {
+    const t = await info(file)
+    const sheets = google.sheets({version: 'v4',auth});
     var data =[
         {
         range: 'Expenses!V5',
-        values:[[t[0][0]]]
+        values:[[t[0][1]]]
     },
     {
         range: 'Expenses!V6:V9',
-        values:[[t[0][0]],[t[0][4]],[t[0][4]]]
+        values:[[t[0][0]],[t[0][0]],[t[1][4]]]
     },
     {
         range: 'Expenses!V10:W10',
@@ -117,7 +117,7 @@ async function addTransactions(auth) {
 ]
     var request = {
         spreadsheetId: '188NSYSaTL9s0kzzEyNoygl04NVssI0CUUOHXFmpsDmo',
-        resource: {data: data, valueInputOption: "USER_ENTERED"}
+        resource: {data: data, valueInputOption: "USER_ENTERED"},
     }
     try{
         const response = await sheets.spreadsheets.values.batchUpdate(request)
@@ -128,9 +128,10 @@ async function addTransactions(auth) {
 
   }
   
-function runUpdates(){
-  authorize().then(addTransactions).catch(console.error)
-  //authorize().then(listTransactions).catch(console.error);
+
+async function runUpdates(file){
+  const auth = await authorize()
+  await addTransactions(file,auth).catch(console.error)
 }
   
 module.exports = {runUpdates}

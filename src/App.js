@@ -1,5 +1,5 @@
 import axios from "./axios"
-import React, {useEffect,useState} from "react"
+import React, {useEffect} from "react"
 import './App.css';
 import {ReactComponent as PlaceHolder} from './placeholder.svg'
 import Fdd from "./Fdd";
@@ -7,22 +7,21 @@ import'./Fdd.css'
 
 
 function App() {
-  const [result,setResult] = useState("")
 
-  useEffect(()=>{
-    axios.get("api/hello").then((response) => {
-      setResult(response.data);
-     });
-  },[])
-
-  function updateInfo(){
-    axios.get("api/update").then((response) => {
-      setResult(response.data);
-     });
-  }
+  useEffect(()=>{},[])
 
   const onUpload = (files) =>{
-    console.log(files)
+    for(let i =0; i < files.length;i++){
+      const formData = new FormData()
+      formData.append('File',files[i])
+      axios.post("/api/file",formData,{
+        headers:{
+          "Content-Type": "multipart/form-data"
+        }
+      }).then((response=>{
+        console.log(response.status)
+      }))
+    }
   }
 
   return (
@@ -39,4 +38,4 @@ function App() {
   );
 }
 
-export default App ;
+export default App;

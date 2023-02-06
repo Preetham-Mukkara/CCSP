@@ -1,6 +1,7 @@
 const pdf = require('pdf-parse');
 const prompt = require('prompt-sync')({sigint: true});
 const fs = require('fs');
+var FileReader = require('filereader')
 var transactions = []
 var dates = []
 var locations = []
@@ -11,19 +12,12 @@ let options = {
     version: 'v1.9.426'
 }
 
-async function getInfo(){
-    var filePath = prompt("Enter the path to your pdf file: ").trim();
-    console.log("You entered: " + filePath);
-    //let check = prompt("Is this correct? ");
-    if(1){
-        console.log("WOOOHOOO");
-        let dataBuffer = fs.readFileSync(filePath);
-        await pdf(dataBuffer,options).then(function(data){
+async function getInfo(file){
+        await pdf(file,options).then(function(data){
              parseData(data.text)
         }).catch(function(error){
             console.log(error);
         });
-    }
     return [dates,locations,costs]
 }
 
