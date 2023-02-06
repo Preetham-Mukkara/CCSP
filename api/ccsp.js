@@ -1,10 +1,10 @@
 const pdf = require('pdf-parse');
 const prompt = require('prompt-sync')({sigint: true});
 const fs = require('fs');
-var transactions = Array()
-var dates = Array()
-var locations = Array()
-var costs = Array()
+var transactions = []
+var dates = []
+var locations = []
+var costs = []
 let options = {
     pagerender: render_page,
     max: 0,
@@ -42,7 +42,7 @@ function parseData(data){
     var lines = data.split("\n");
     for(let i =0; i < lines.length; i++){
         var line = lines[i];
-        if(line.indexOf('/') == 2 && line.indexOf(' ') == 5){
+        if(line.indexOf('/') === 2 && line.indexOf(' ') === 5){
             transactions.push(line)
         }
     }
@@ -66,7 +66,7 @@ function render_page(pageData){
     .then(function(textContent) {
         let lastY, text = '';
         for (let item of textContent.items) {
-            if (lastY == item.transform[5] || !lastY){
+            if (lastY === item.transform[5] || !lastY){
                 text += item.str;
             }  
             else{

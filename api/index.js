@@ -95,7 +95,7 @@ async function listTransactions(auth) {
  */
 async function addTransactions(auth) {
     const t = await info()
-    const sheets = google.sheets({version: 'v4', auth});
+    const sheets = google.sheets({version: 'v4', auth: auth});
     var data =[
         {
         range: 'Expenses!V5',
@@ -103,7 +103,7 @@ async function addTransactions(auth) {
     },
     {
         range: 'Expenses!V6:V9',
-        values:[['testing2'],['testing3'],['testing4']]
+        values:[[t[0][0]],[t[0][4]],[t[0][4]]]
     },
     {
         range: 'Expenses!V10:W10',
@@ -121,14 +121,16 @@ async function addTransactions(auth) {
     }
     try{
         const response = await sheets.spreadsheets.values.batchUpdate(request)
-        console.log(JSON.stringify(response.data.totalUpdatedCells,null,2));
+        return JSON.stringify(response.data.totalUpdatedCells,null,2);
     } catch(err){
-        console.error(err)
+        return err
     }
 
   }
   
-
-
-// authorize().then(listTransactions).catch(console.error);
-authorize().then(addTransactions).catch(console.error)
+function runUpdates(){
+  authorize().then(addTransactions).catch(console.error)
+  //authorize().then(listTransactions).catch(console.error);
+}
+  
+module.exports = {runUpdates}

@@ -1,0 +1,86 @@
+.FilesDragAndDrop {
+    position: relative;
+}
+
+.FilesDragAndDrop .FilesDragAndDropArea {
+    width: 300px;
+    height: 200px;
+    padding: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
+    font-size: 24px;
+    color: #555555;
+    border: 2px #c3c3c3 dashed;
+    border-radius: 12px;
+}
+
+.FilesDragAndDrop .FilesDragAndDropPlaceholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 305px;
+    height: 205px;
+    padding: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
+    color: #7f8e99;
+    font-size: 24px;
+    opacity: 1;
+    text-align: center;
+    line-height: 1.4;
+    border-radius: 12px;
+    background-color: #e7e7e7;
+    z-index: 9999;
+}
+
+.FilesDragAndDrop .FilesDragAndDropPlaceholdererror {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 305px;
+    height: 205px;
+    padding: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
+    color: #cf8e99;
+    font-size: 24px;
+    opacity: 1;
+    text-align: center;
+    line-height: 1.4;
+    border-radius: 12px;
+    background-color: #f7e7e7;
+    z-index: 9999;
+}
+
+.FilesDragAndDrop .FilesDragAndDropPlaceholdersuccess {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 305px;
+    height: 205px;
+    padding: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column nowrap;
+    color: #8ecf99;
+    font-size: 24px;
+    opacity: 1;
+    text-align: center;
+    line-height: 1.4;
+    border-radius: 12px;
+    background-color: #e7f7e7;
+    z-index: 9999;
+}
