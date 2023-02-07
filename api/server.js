@@ -18,9 +18,8 @@ server.get("/api/update", (req,res)=>{
 
 
 server.post("/api/file",async (req,res)=>{
-    const val = await runUpdates(req.files.File.data)
-    console.log(val)
-    res.sendStatus(200)
+    const response = await runUpdates(req.files.File.data)
+    res.status(200).send(response)
 })
 
 server.listen(PORT, () => console.log(`listening on port ${PORT}`));

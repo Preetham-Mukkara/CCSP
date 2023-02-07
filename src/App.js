@@ -19,7 +19,7 @@ function App() {
           "Content-Type": "multipart/form-data"
         }
       }).then((response=>{
-        console.log(response.status)
+        console.log(response.data)
       }))
     }
   }

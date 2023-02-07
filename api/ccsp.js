@@ -1,24 +1,36 @@
 const pdf = require('pdf-parse');
-const prompt = require('prompt-sync')({sigint: true});
-const fs = require('fs');
-var FileReader = require('filereader')
-var transactions = []
-var dates = []
-var locations = []
-var costs = []
-let options = {
-    pagerender: render_page,
-    max: 0,
-    version: 'v1.9.426'
+
+var data = {
+    January: [],
+    February: [],
+    March: [],
+    April: [],
+    May: [],
+    June: [],
+    July: [],
+    August: [],
+    September: [],
+    October: [],
+    November: [],
+    December: []
 }
+var transactions = []
 
 async function getInfo(file){
-        await pdf(file,options).then(function(data){
+    let options = {
+        pagerender: render_page,
+        max: 0,
+        version: 'v1.9.426'
+    }
+    data = {January: [],February: [], March: [], April: [], May: [], June: [], July: [], August: [],September: [], October: [],November: [], December: []}
+
+    transactions = []
+    await pdf(file,options).then(function(data){
              parseData(data.text)
         }).catch(function(error){
             console.log(error);
         });
-    return [dates,locations,costs]
+    return data
 }
 
 function findIndex(str){
@@ -32,6 +44,49 @@ function findIndex(str){
     return index
 }
 
+function dataAnalyzer(date,location,cost){
+    switch(date.slice(0,2)){
+        case '01':
+            data.January.push([location,cost])
+            break;
+        case '02':
+            data.February.push([location,cost])
+            break;
+        case '03':
+            data.March.push([location,cost])
+            break;
+        case '04':
+            data.April.push([location,cost])
+            break;
+        case '05':
+            data.May.push([location,cost])
+            break;
+        case '06':
+            data.June.push([location,cost])
+            break;
+        case '07':
+            data.July.push([location,cost])
+            break;
+        case '08':
+            data.August.push([location,cost])
+            break;
+        case '09':
+            data.September.push([location,cost])
+            break;
+        case '10':
+            data.October.push([location,cost])
+            break;
+        case '11':
+            data.November.push([location,cost])
+            break;
+        case '12':
+            data.December.push([location,cost])
+            break;                        
+        default:
+            console.log("This was not a valid date!")
+    }
+}
+
 function parseData(data){
     var lines = data.split("\n");
     for(let i =0; i < lines.length; i++){
@@ -42,9 +97,13 @@ function parseData(data){
     }
     for(let i =0; i<transactions.length;i++){
         var index = findIndex(transactions[i])
-        dates.push(transactions[i].slice(0,5).trim())
-        locations.push(transactions[i].slice(5,index+1).trim())
-        costs.push(transactions[i].slice(index+1).trim())
+        var date = transactions[i].slice(0,5).trim()
+        var location = transactions[i].slice(5,index+1).trim()
+        var cost = transactions[i].slice(index+1).trim()
+        //only keeping track of payments that cost money (aka a positive cost) and not payments to credit card company (aka negative costs)
+        if(cost.charAt(0) !== '-'){
+        dataAnalyzer(date,location,cost)
+        }
     }
 }
 
