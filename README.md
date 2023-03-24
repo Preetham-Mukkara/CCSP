@@ -1,3 +1,12 @@
+
+This is a project where you can drag and drop your credit card statements from your bank and give your google sheets spreadsheet id and all your transactions will be automatically entered into your spreadsheet making it easier to budget than having to type in every transaction manually. 
+
+Future: 
+The next iteration will have a ML model that runs a classification algorithm on the transactions to sort them into preset budgeting categories making it 
+even easier to budget!
+
+Note: As of now it only supports Chase bank statements that are downloaded into a pdf format. Will expand to be more encompassing in the future.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
